@@ -250,7 +250,8 @@
 
     <!-- Product Grid Section (Hidden initially) -->
     <section class="shop-section" id="shopTarget">
-        <h2 class="section-title">The Collection</h2>
+        <!-- Text changed to "Store" -->
+        <h2 class="section-title">Store</h2>
         
         <div class="product-grid">
             
@@ -300,15 +301,12 @@
         document.getElementById('shopNowBtn').addEventListener('click', function() {
             const shopSection = document.getElementById('shopTarget');
             
-            // 1. Make the section exist in the layout
             shopSection.classList.add('reveal');
             
-            // 2. Short timeout to ensure the display change updates before we fade it in
             setTimeout(() => {
                 shopSection.style.opacity = '1';
                 shopSection.style.transform = 'translateY(0)';
                 
-                // 3. Smoothly scroll down to the newly revealed store page
                 shopSection.scrollIntoView({ behavior: 'smooth' });
             }, 10);
         });
