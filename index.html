@@ -25,9 +25,11 @@
             overflow-x: hidden;
         }
 
-        a {
-            text-decoration: none;
+        button {
+            background: none;
+            border: none;
             color: inherit;
+            cursor: pointer;
         }
 
         /* --- Navigation --- */
@@ -50,6 +52,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -57,6 +60,81 @@
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
+        }
+
+        /* Cart Icon Styling */
+        .cart-icon-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .cart-icon-svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            transition: transform 0.2s ease;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-badge.visible {
+            opacity: 1;
+        }
+
+        /* Animation: Cart Shake */
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Star Particles */
+        .star-particle {
+            position: absolute;
+            color: #ffffff;
+            pointer-events: none;
+            font-size: 12px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+            animation: flyAndFade 0.6s ease-out forwards;
+        }
+
+        @keyframes flyAndFade {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0.2);
+                opacity: 0;
+            }
         }
 
         /* --- Hero Section --- */
@@ -85,31 +163,24 @@
             font-weight: 300;
         }
 
-        /* Apple-esque Button with Hover Glow */
         .btn-shop {
             background-color: #ffffff;
             color: #000000;
             padding: 14px 40px;
             font-size: 1rem;
             font-weight: 500;
-            border: none;
             border-radius: 30px;
-            cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 0 0px rgba(255, 255, 255, 0);
         }
 
         .btn-shop:hover {
-            background-color: #ffffff;
             transform: scale(1.05);
-            /* Clean white ambient glow */
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 
-                        0 0 50px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* --- Shop Section (Hidden by default) --- */
+        /* --- Shop Section --- */
         .shop-section {
-            display: none; /* Keeps items completely hidden initially */
+            display: none;
             max-width: 1200px;
             margin: 0 auto;
             padding: 100px 20px;
@@ -118,7 +189,6 @@
             transition: opacity 1s ease, transform 1s ease;
         }
 
-        /* Class added via Javascript to smoothly animate the shop appearance */
         .shop-section.reveal {
             display: block;
             opacity: 1;
@@ -130,7 +200,6 @@
             font-weight: 600;
             margin-bottom: 50px;
             text-align: center;
-            letter-spacing: -0.5px;
         }
 
         .product-grid {
@@ -139,7 +208,6 @@
             gap: 40px;
         }
 
-        /* Product Card with Glow Effect */
         .product-card {
             background-color: #0a0a0c;
             border: 1px solid #1c1c1e;
@@ -153,12 +221,9 @@
         .product-card:hover {
             border-color: #ffffff;
             transform: translateY(-5px);
-            /* Subtle, high-end glow around the product card */
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08),
-                        0 0 15px rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08);
         }
 
-        /* Placeholder for Product Images */
         .product-image-placeholder {
             width: 100%;
             height: 320px;
@@ -172,11 +237,6 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: background-color 0.4s ease;
-        }
-
-        .product-card:hover .product-image-placeholder {
-            background-color: #2c2c2e;
         }
 
         .product-info {
@@ -189,36 +249,200 @@
         .product-name {
             font-size: 1.2rem;
             font-weight: 500;
-            color: #f5f5f7;
         }
 
         .product-price {
             font-size: 1.1rem;
             color: #86868b;
-            font-weight: 400;
         }
 
-        /* Stripe Checkout Button */
-        .stripe-checkout-btn {
+        .view-product-btn {
             display: block;
             text-align: center;
-            background-color: transparent;
-            color: #ffffff;
             border: 1px solid #333336;
             padding: 12px 0;
             font-size: 0.95rem;
             font-weight: 500;
             border-radius: 8px;
             width: 100%;
-            margin-top: auto;
             transition: all 0.3s ease;
         }
 
-        .stripe-checkout-btn:hover {
+        .view-product-btn:hover {
             background-color: #ffffff;
             color: #000000;
             border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Product Modal (Item Page Overlay) --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: #0a0a0c;
+            border: 1px solid #1c1c1e;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content { grid-template-columns: 1fr; padding: 20px; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #86868b;
+        }
+
+        /* Image Gallery Slider inside Modal */
+        .gallery-container {
+            position: relative;
+        }
+
+        .modal-image-window {
+            width: 100%;
+            height: 380px;
+            background-color: #1c1c1e;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #424245;
+            overflow: hidden;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .gallery-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #333336;
+            cursor: pointer;
+        }
+
+        .gallery-dot.active {
+            background-color: #ffffff;
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-title { font-size: 2rem; margin-bottom: 10px; font-weight: 600; }
+        .modal-price { font-size: 1.4rem; color: #86868b; margin-bottom: 20px; }
+        .modal-desc { color: #a1a1a6; margin-bottom: 30px; font-size: 0.95rem; }
+
+        .btn-add-cart {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 14px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-cart:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* --- Cart Slide-Out Drawer --- */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: #0a0a0c;
+            border-left: 1px solid #1c1c1e;
+            z-index: 300;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @media (max-width: 450px) { .cart-drawer { width: 100%; right: -100%; } }
+
+        .cart-drawer.active { right: 0; }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #1c1c1e;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #1c1c1e;
+            padding-top: 20px;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .stripe-checkout-link {
+            display: block;
+            text-align: center;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 14px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
         }
 
         /* --- Footer --- */
@@ -233,84 +457,231 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
         <div class="nav-container">
             <div class="logo">Rift Moto</div>
+            <div class="cart-icon-wrapper" id="cartIconTrigger">
+                <svg class="cart-icon-svg" viewBox="0 0 24 24">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <div class="cart-badge" id="cartBadge">0</div>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>Rift Moto</h1>
         <p>Precision built. Minimal design.</p>
-        <!-- The Action Button -->
         <button class="btn-shop" id="shopNowBtn">Shop Now</button>
     </section>
 
-    <!-- Product Grid Section (Hidden initially) -->
     <section class="shop-section" id="shopTarget">
-        <!-- Text changed to "Store" -->
         <h2 class="section-title">Store</h2>
-        
         <div class="product-grid">
             
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-image-placeholder">Product Image</div>
+            <div class="product-card" data-id="1" data-name="Core Moto Jacket" data-price="299" data-desc="Engineered premium leather. Complete impact abrasion resistance with ultra-slim flexible armor layouts. Built for the modern asphalt rider." data-imgs="['[Jacket Angle 1]', '[Jacket Detail]', '[Jacket Fit Check]']">
+                <div class="product-image-placeholder">Core Moto Jacket</div>
                 <div class="product-info">
                     <h3 class="product-name">Core Moto Jacket</h3>
                     <span class="product-price">$299.00</span>
                 </div>
-                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
-                <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
+                <button class="view-product-btn">Buy Now</button>
             </div>
 
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-image-placeholder">Product Image</div>
+            <div class="product-card" data-id="2" data-name="Rift Stealth Helmet" data-price="450" data-desc="Aero-tuned carbon composite shell structures. Zero distortion panoramic visor shields. Complete acoustic dampening luxury internals." data-imgs="['[Helmet Side Profile]', '[Helmet Matte Carbon]', '[Helmet Visor Up]']">
+                <div class="product-image-placeholder">Rift Stealth Helmet</div>
                 <div class="product-info">
                     <h3 class="product-name">Rift Stealth Helmet</h3>
                     <span class="product-price">$450.00</span>
                 </div>
-                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
-                <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
+                <button class="view-product-btn">Buy Now</button>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image-placeholder">Product Image</div>
+            <div class="product-card" data-id="3" data-name="Apex Gloves" data-price="85" data-desc="Kangaroo skin reinforced palms. Articulated titanium knuckle impact guards. Seamless touchscreen responsive fingertips." data-imgs="['[Gloves Top Grip]', '[Gloves Palm View]']">
+                <div class="product-image-placeholder">Apex Gloves</div>
                 <div class="product-info">
                     <h3 class="product-name">Apex Gloves</h3>
                     <span class="product-price">$85.00</span>
                 </div>
-                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
-                <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
+                <button class="view-product-btn">Buy Now</button>
             </div>
 
         </div>
     </section>
 
-    <!-- Footer -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="gallery-container">
+                <div class="modal-image-window" id="modalImageWindow">Product Image</div>
+                <div class="gallery-nav" id="galleryNav"></div>
+            </div>
+            <div class="modal-details">
+                <h2 class="modal-title" id="modalTitle">Product Name</h2>
+                <span class="modal-price" id="modalPrice">$0.00</span>
+                <p class="modal-desc" id="modalDesc">Description text goes here.</p>
+                <button class="btn-add-cart" id="addToCartBtn">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h2>Your Bag</h2>
+            <button id="closeCart" style="font-size: 1.5rem; color:#86868b;">&times;</button>
+        </div>
+        <div class="cart-items-container" id="cartItemsContainer">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">$0.00</span>
+            </div>
+            <a href="YOUR_STRIPE_CHECKOUT_URL_HERE" class="stripe-checkout-link">Check Out</a>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Rift Moto. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript to Handle the Reveal Action -->
     <script>
+        // --- Navigation / State Control ---
+        let cart = [];
+        let activeProduct = null;
+        let activeImgIndex = 0;
+
+        // Reveal Store Section
         document.getElementById('shopNowBtn').addEventListener('click', function() {
             const shopSection = document.getElementById('shopTarget');
-            
             shopSection.classList.add('reveal');
-            
             setTimeout(() => {
                 shopSection.style.opacity = '1';
                 shopSection.style.transform = 'translateY(0)';
-                
                 shopSection.scrollIntoView({ behavior: 'smooth' });
             }, 10);
         });
-    </script>
 
+        // --- Modal Control Logic ---
+        const modal = document.getElementById('productModal');
+        document.querySelectorAll('.view-product-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.product-card');
+                activeProduct = {
+                    id: card.dataset.id,
+                    name: card.dataset.name,
+                    price: parseInt(card.dataset.price),
+                    desc: card.dataset.desc,
+                    images: eval(card.dataset.imgs)
+                };
+                openModal();
+            });
+        });
+
+        function openModal() {
+            document.getElementById('modalTitle').innerText = activeProduct.name;
+            document.getElementById('modalPrice').innerText = `$${activeProduct.price}.00`;
+            document.getElementById('modalDesc').innerText = activeProduct.desc;
+            activeImgIndex = 0;
+            renderGallery();
+            modal.classList.add('active');
+        }
+
+        function renderGallery() {
+            const imgWindow = document.getElementById('modalImageWindow');
+            const nav = document.getElementById('galleryNav');
+            imgWindow.innerText = activeProduct.images[activeImgIndex];
+            nav.innerHTML = '';
+            activeProduct.images.forEach((img, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('gallery-dot');
+                if(i === activeImgIndex) dot.classList.add('active');
+                dot.addEventListener('click', () => { activeImgIndex = i; renderGallery(); });
+                nav.appendChild(dot);
+            });
+        }
+
+        document.getElementById('closeModal').addEventListener('click', () => modal.classList.remove('active'));
+
+        // --- Cart Operations ---
+        const cartDrawer = document.getElementById('cartDrawer');
+        document.getElementById('cartIconTrigger').addEventListener('click', () => cartDrawer.classList.add('active'));
+        document.getElementById('closeCart').addEventListener('click', () => cartDrawer.classList.remove('active'));
+
+        document.getElementById('addToCartBtn').addEventListener('click', () => {
+            const existingItem = cart.find(item => item.id === activeProduct.id);
+            if(existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ ...activeProduct, qty: 1 });
+            }
+            modal.classList.remove('active');
+            updateCartUI();
+            triggerEffects();
+        });
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            
+            let totalItems = 0;
+            let subtotal = 0;
+            container.innerHTML = '';
+
+            cart.forEach(item => {
+                totalItems += item.qty;
+                subtotal += (item.price * item.qty);
+
+                const itemRow = document.createElement('div');
+                itemRow.classList.add('cart-item');
+                itemRow.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p style="color:#86868b; font-size:0.85rem;">Qty: ${item.qty}</p>
+                    </div>
+                    <span>$${item.price * item.qty}.00</span>
+                `;
+                container.appendChild(itemRow);
+            });
+
+            badge.innerText = totalItems;
+            if(totalItems > 0) badge.classList.add('visible');
+            else badge.classList.remove('visible');
+
+            subtotalEl.innerText = `$${subtotal}.00`;
+        }
+
+        // --- Cart Particle Effects & Animations ---
+        function triggerEffects() {
+            const cartTrigger = document.getElementById('cartIconTrigger');
+            
+            // Shake Animation
+            cartTrigger.classList.add('shake');
+            setTimeout(() => cartTrigger.classList.remove('shake'), 400);
+
+            // Pop Stars Particles
+            const rect = cartTrigger.getBoundingClientRect();
+            for(let i=0; i<6; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star-particle');
+                star.innerHTML = '✦';
+                
+                // Random flight coordinates
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 30 + Math.random() * 40;
+                star.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                star.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                
+                star.style.left = `${rect.left + rect.width/2}px`;
+                star.style.top = `${rect.top + rect.height/2 + window.scrollY}px`;
+                
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 600);
+            }
+        }
+    </script>
 </body>
 </html>
