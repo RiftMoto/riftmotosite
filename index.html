@@ -14,10 +14,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: #000000;
             color: #ffffff;
             line-height: 1.5;
+            overflow-x: hidden;
         }
 
         a {
@@ -54,33 +59,20 @@
             text-transform: uppercase;
         }
 
-        .nav-links a {
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: #a1a1a6;
-            margin-left: 25px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ffffff;
-        }
-
         /* --- Hero Section --- */
         .hero {
-            height: 80vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            margin-top: 60px;
             background: radial-gradient(circle at center, #111 0%, #000 100%);
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 700;
             letter-spacing: -1px;
             margin-bottom: 10px;
@@ -89,69 +81,90 @@
         .hero p {
             font-size: 1.2rem;
             color: #86868b;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-weight: 300;
         }
 
-        /* Apple-esque Rounded Button */
+        /* Apple-esque Button with Hover Glow */
         .btn-shop {
             background-color: #ffffff;
             color: #000000;
-            padding: 12px 35px;
-            font-size: 0.95rem;
+            padding: 14px 40px;
+            font-size: 1rem;
             font-weight: 500;
-            border-none: none;
+            border: none;
             border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 0px rgba(255, 255, 255, 0);
         }
 
         .btn-shop:hover {
-            background-color: #f5f5f7;
-            transform: scale(1.02);
+            background-color: #ffffff;
+            transform: scale(1.05);
+            /* Clean white ambient glow */
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 
+                        0 0 50px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- Shop Section (Shopify Grid Style) --- */
+        /* --- Shop Section (Hidden by default) --- */
         .shop-section {
+            display: none; /* Keeps items completely hidden initially */
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 100px 20px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        /* Class added via Javascript to smoothly animate the shop appearance */
+        .shop-section.reveal {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 600;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-align: center;
+            letter-spacing: -0.5px;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
         }
 
+        /* Product Card with Glow Effect */
         .product-card {
             background-color: #0a0a0c;
             border: 1px solid #1c1c1e;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            transition: border-color 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .product-card:hover {
-            border-color: #333336;
+            border-color: #ffffff;
+            transform: translateY(-5px);
+            /* Subtle, high-end glow around the product card */
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08),
+                        0 0 15px rgba(255, 255, 255, 0.03);
         }
 
         /* Placeholder for Product Images */
         .product-image-placeholder {
             width: 100%;
-            height: 300px;
+            height: 320px;
             background-color: #1c1c1e;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -159,23 +172,28 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: background-color 0.4s ease;
+        }
+
+        .product-card:hover .product-image-placeholder {
+            background-color: #2c2c2e;
         }
 
         .product-info {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .product-name {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 500;
             color: #f5f5f7;
         }
 
         .product-price {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #86868b;
             font-weight: 400;
         }
@@ -186,88 +204,115 @@
             text-align: center;
             background-color: transparent;
             color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 10px 0;
-            font-size: 0.9rem;
+            border: 1px solid #333336;
+            padding: 12px 0;
+            font-size: 0.95rem;
             font-weight: 500;
-            border-radius: 6px;
+            border-radius: 8px;
             width: 100%;
-            margin-top: auto; /* Pushes button to bottom of card if text lengths vary */
-            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-top: auto;
+            transition: all 0.3s ease;
         }
 
         .stripe-checkout-btn:hover {
             background-color: #ffffff;
             color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         /* --- Footer --- */
         footer {
             border-top: 1px solid #1c1c1e;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
             color: #424245;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
+    <!-- Header Navigation -->
     <header>
         <div class="nav-container">
             <div class="logo">Rift Moto</div>
-            <nav class="nav-links">
-                <a href="#shop">Shop</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </nav>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
         <h1>Rift Moto</h1>
         <p>Precision built. Minimal design.</p>
-        <a href="#shop" class="btn-shop">Shop Now</a>
+        <!-- The Action Button -->
+        <button class="btn-shop" id="shopNowBtn">Shop Now</button>
     </section>
 
-    <section class="shop-section" id="shop">
-        <h2 class="section-title">Featured Products</h2>
+    <!-- Product Grid Section (Hidden initially) -->
+    <section class="shop-section" id="shopTarget">
+        <h2 class="section-title">The Collection</h2>
         
         <div class="product-grid">
             
+            <!-- Product 1 -->
             <div class="product-card">
                 <div class="product-image-placeholder">Product Image</div>
                 <div class="product-info">
                     <h3 class="product-name">Core Moto Jacket</h3>
                     <span class="product-price">$299.00</span>
                 </div>
+                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
                 <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
             </div>
 
+            <!-- Product 2 -->
             <div class="product-card">
                 <div class="product-image-placeholder">Product Image</div>
                 <div class="product-info">
                     <h3 class="product-name">Rift Stealth Helmet</h3>
                     <span class="product-price">$450.00</span>
                 </div>
+                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
                 <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
             </div>
 
+            <!-- Product 3 -->
             <div class="product-card">
                 <div class="product-image-placeholder">Product Image</div>
                 <div class="product-info">
                     <h3 class="product-name">Apex Gloves</h3>
                     <span class="product-price">$85.00</span>
                 </div>
+                <!-- STRIPE INTEGRATION: Paste your Stripe Link here -->
                 <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="stripe-checkout-btn">Buy Now</a>
             </div>
 
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2026 Rift Moto. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript to Handle the Reveal Action -->
+    <script>
+        document.getElementById('shopNowBtn').addEventListener('click', function() {
+            const shopSection = document.getElementById('shopTarget');
+            
+            // 1. Make the section exist in the layout
+            shopSection.classList.add('reveal');
+            
+            // 2. Short timeout to ensure the display change updates before we fade it in
+            setTimeout(() => {
+                shopSection.style.opacity = '1';
+                shopSection.style.transform = 'translateY(0)';
+                
+                // 3. Smoothly scroll down to the newly revealed store page
+                shopSection.scrollIntoView({ behavior: 'smooth' });
+            }, 10);
+        });
+    </script>
 
 </body>
 </html>
